@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaushal Gautam | Indie Game Developer & Programmer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Kaushal<span> Gautam</span></div>
+            <ul class="nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#about-me">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#download">Get PixelDash</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="hero-section">
+            <div class="hero-container">
+                <p class="hero-subtitle">Hello World, I'm a Game Developer</p>
+                <h1 class="hero-title">Crafting Virtual Worlds From The Ground Up</h1>
+                <p class="hero-description">Specializing in gameplay mechanics, rapid prototyping, and immersive 2D experiences. Take a look at my work or test out my latest title below.</p>
+                <div class="hero-cta">
+                    <a href="#projects" class="btn btn-primary">View Projects</a>
+                    <a href="#download" class="btn btn-secondary">Download Latest Game</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about-me" class="section profile-section">
+            <div class="container">
+                <h2 class="section-title">About Me</h2>
+                <div class="profile-grid">
+                    <div class="profile-text">
+                        <p>I am a passionate Indie Game Developer with over 3 years of experience writing clean code and creating engaging digital environments. Driven by a love for retro mechanics and smooth controls, I spend my time building gameplay loops in Python, C#, and JavaScript.</p>
+                        <div class="skills-container">
+                            <span class="skill-pill">Python / Pygame</span>
+                            <span class="skill-pill">C# / Unity</span>
+                            <span class="skill-pill">Git / Version Control</span>
+                            <span class="skill-pill">Pixel Art & Animation</span>
+                            <span class="skill-pill">UI/UX Layouts</span>
+                        </div>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="stat-card">
+                            <h3>10+</h3>
+                            <p>Prototypes Built</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>3</h3>
+                            <p>Game Jam Entries</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section">
+            <div class="container">
+                <h2 class="section-title">Featured Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card" id="pixeldash">
+                        <div class="project-icon">🎮</div>
+                        <span class="project-category">Released Title</span>
+                        <h3>PixelDash</h3>
+                        <p>A fast-paced 2D side-scrolling platformer featuring procedural level elements, key-collection mechanics, and responsive movement engine loops.</p>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Pygame</span>
+                            <span class="tag">Game Dev</span>
+                        </div>
+                        <button class="project-link-btn" onclick="showProjectInfo()">Learn More & Controls →</button>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-icon">🎯</div>
+                        <span class="project-category">Prototype</span>
+                        <h3>ShadowPulse</h3>
+                        <p>A top-down action rogue-like built to test advanced state-machine AI patterns, dynamic lighting systems, and pathfinding algorithms.</p>
+                        <div class="project-tags">
+                            <span class="tag">Unity</span>
+                            <span class="tag">C#</span>
+                            <span class="tag">AI System</span>
+                        </div>
+                        <button class="project-link-btn" disabled style="opacity: 0.5; cursor: not-allowed;">Case Study Coming Soon</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div id="about-project" class="about-modal-overlay" style="display: none;">
+            <div class="about-content">
+                <h2>About PixelDash</h2>
+                <div class="game-info">
+                    <div class="game-details">
+                        <h3>🎮 Game Features</h3>
+                        <ul>
+                            <li>5 structurally challenging levels</li>
+                            <li>Dynamic spike traps and hazard zones</li>
+                            <li>Integrated key collection progression gate</li>
+                            <li>Optimized fullscreen performance config</li>
+                        </ul>
+                    </div>
+                    <div class="game-details">
+                        <h3>🕹️ Controls</h3>
+                        <ul>
+                            <li><strong>← → / A D :</strong> Move left & right</li>
+                            <li><strong>↑ / SPACE :</strong> Character jump</li>
+                            <li><strong>ESC :</strong> Return to Main Menu</li>
+                        </ul>
+                    </div>
+                    <div class="game-details">
+                        <h3>📦 Requirements</h3>
+                        <ul>
+                            <li>Windows 10 / 11 Desktop</li>
+                            <li>No external runtimes needed</li>
+                            <li>Storage: ~50MB disk room</li>
+                        </ul>
+                    </div>
+                </div>
+                <button class="close-btn" onclick="hideProjectInfo()">Return to Portfolio</button>
+            </div>
+        </div>
+
+        <section id="download" class="section download-section">
+            <div class="container">
+                <h2 class="section-title">Ready to Play?</h2>
+                <div class="download-container">
+                    <div class="download-card">
+                        <div class="download-icon">⬇️</div>
+                        <h3>PixelDash v1.0</h3>
+                        <p>Standalone build. Unpack the directory, launch the application file, and play natively instantly.</p>
+                        <div class="download-info">
+                            <span>📦 Size: ~50MB</span>
+                            <span>🪟 Architecture: Windows x64</span>
+                        </div>
+                        <button class="download-btn" onclick="downloadGame()">
+                            Download Desktop Executable
+                        </button>
+                        <p class="download-note">⚠️ Note: Accept the SmartScreen "Run Anyway" rule option if prompted on first boot.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2026 Kaushal Gautam. Built with HTML, CSS, and Vanilla JS.</p>
+            <div class="footer-socials">
+                <a href="#">GitHub</a>
+                <a href="#">LinkedIn</a>
+                <a href="#">Itch.io</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
