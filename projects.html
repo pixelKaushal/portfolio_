@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaushal Gautam | Project Registry</title>
+    <style>
+        /* --- Design Tokens & Global Reset --- */
+        :root {
+            --bg-color: #0a0a0d;
+            --card-bg: #111116;
+            --border-color: #1c1c28;
+            --text-main: #f0f0f5;
+            --text-muted: #6e6e80;
+            --accent-cyan: #00f0ff;
+            --accent-purple: #9d4edd;
+            --accent-green: #39ff14;
+            --font-mono: 'Courier New', Courier, monospace;
+            --font-sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .logo a {
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: linear-gradient(rgba(18, 18, 24, 0.7) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(18, 18, 24, 0.7) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        /* --- Navigation Styles --- */
+        header {
+            border-bottom: 1px solid var(--border-color);
+            background-color: rgba(10, 10, 13, 0.8);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1.logo {
+            font-size: 1.1rem;
+            font-family: var(--font-mono);
+            font-weight: 700;
+        }
+
+        h1.logo a {
+            color: var(--text-main);
+            text-decoration: none;
+            outline: none;
+        }
+
+        h1.logo span {
+            color: var(--accent-cyan);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-family: var(--font-mono);
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-cyan);
+        }
+
+        /* --- Main Layout Frame --- */
+        main {
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 20px;
+            flex-grow: 1;
+        }
+
+        /* --- Page Header Terminal Prompt --- */
+        .page-header-terminal {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 35px;
+            font-family: var(--font-mono);
+        }
+
+        .prompt-line {
+            color: var(--accent-purple);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            font-family: var(--font-sans);
+        }
+
+        .page-subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-family: var(--font-sans);
+        }
+
+        /* --- Filtering Terminal Menu --- */
+        .filter-section-label {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 35px;
+        }
+
+        .filter-btn {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 8px 18px;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--accent-purple);
+            color: var(--text-main);
+        }
+
+        .filter-btn.active {
+            background-color: #12121a;
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        /* --- Manifest Log Grid --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 100%));
+            gap: 20px;
+        }
+
+        @media (min-width: 750px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .project-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: border-color 0.2s ease;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent-cyan);
+        }
+
+        .card-top {
+            margin-bottom: 20px;
+        }
+
+        .project-status {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent-purple);
+            margin-bottom: 10px;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-main);
+            letter-spacing: -0.3px;
+        }
+
+        .project-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        /* --- Tech Tags --- */
+        .tag-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tag {
+            background: #0b0b0f;
+            border: 1px solid var(--border-color);
+            color: #a0a0b8;
+            font-size: 0.75rem;
+            font-family: var(--font-mono);
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+
+        /* --- Action Terminal Triggers --- */
+        .card-actions {
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid rgba(28, 28, 40, 0.5);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .action-link {
+            font-size: 0.85rem;
+            font-family: var(--font-mono);
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .repo-btn {
+            color: var(--accent-cyan);
+        }
+
+        .repo-btn:hover {
+            text-decoration: underline;
+        }
+
+        .download-btn {
+            background-color: rgba(57, 255, 20, 0.03);
+            color: var(--accent-green);
+            border: 1px solid rgba(57, 255, 20, 0.2);
+            padding: 4px 12px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .download-btn:hover {
+            background-color: var(--accent-green);
+            color: #000;
+            border-color: var(--accent-green);
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
+        }
+
+        .hidden-item {
+            display: none !important;
+        }
+
+        /* --- Footer --- */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 25px 20px;
+            text-align: center;
+            font-size: 0.8rem;
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo"><a href="index.html">kaushal<span>@workspace</span></a></div>
+            <ul class="nav-links">
+                <li><a href="index.html#about">./about_me</a></li>
+                <li><a href="projects.html" class="active">./projects</a></li>
+                <li><a href="index.html#contact">./contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Page Header Terminal Prompt -->
+        <section class="page-header-terminal">
+            <div class="prompt-line">$ ./view_registry --verbose</div>
+            <h2 class="page-title">Project Registry</h2>
+            <p class="page-subtitle">Production deployments, system engines, and staging source repositories.</p>
+        </section>
+
+        <!-- Filter Subsystem -->
+        <div class="filter-section-label">Filter Manifest Matrix:</div>
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterProjects('all', this)">[ALL_BUILDS]</button>
+            <button class="filter-btn" onclick="filterProjects('software', this)">[APPLICATIONS]</button>
+            <button class="filter-btn" onclick="filterProjects('game', this)">[INTERACTIVE_SOFTWARE]</button>
+        </div>
+
+        <!-- Manifest Grid -->
+        <div class="projects-grid">
+            
+            <!-- PixelDash -->
+            <div class="project-card" data-category="game">
+                <div class="card-top">
+                    <span class="project-status">LOG_ID: 01 // DEPLOYED</span>
+                    <h3 class="project-title">PixelDash</h3>
+                    <p class="project-desc">A fast-paced 2D side-scrolling platformer game featuring retro pixel-art physics, custom hazard entities, and a key-collection mapping progression model.</p>
+                    <div class="tag-group">
+                        <span class="tag">Python</span>
+                        <span class="tag">Pygame</span>
+                        <span class="tag">2D Physics</span>
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <a href="https://github.com/pixelKaushal/PixelDash" target="_blank" class="action-link repo-btn">src_code &rarr;</a>
+                    <a href="https://pixelkaushal.github.io/PixelDash/" target="_blank" class="action-link download-btn">get_build</a>
+                </div>
+            </div>
+
+            <!-- SyncSXC -->
+            <div class="project-card" data-category="software">
+                <div class="card-top">
+                    <span class="project-status">LOG_ID: 02 // STAGING</span>
+                    <h3 class="project-title">SyncSXC</h3>
+                    <p class="project-desc">A centralized, internal administrative management platform tailored to sync calendar logs, accurate scheduling data, and event registration pipelines seamlessly at St. Xavier's College (+2 Wing).</p>
+                    <div class="tag-group">
+                        <span class="tag">PHP</span>
+                        <span class="tag">SQL</span>
+                        <span class="tag">JavaScript</span>
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <a href="https://github.com/pixelKaushal/syncsxc" target="_blank" class="action-link repo-btn">src_code &rarr;</a>
+                </div>
+            </div>
+
+            <!-- Movie Recommendation Engine -->
+            <div class="project-card" data-category="software">
+                <div class="card-top">
+                    <span class="project-status">LOG_ID: 03 // STAGING</span>
+                    <h3 class="project-title">Movie Recommendation Engine</h3>
+                    <p class="project-desc">An analytics computation pipeline optimized to parse collaborative evaluation tables and return real-time programmatic user affinity predictions.</p>
+                    <div class="tag-group">
+                        <span class="tag">Python</span>
+                        <span class="tag">Pandas</span>
+                        <span class="tag">Scikit-Learn</span>
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <a href="https://github.com/pixelKaushal/mre" target="_blank" class="action-link repo-btn">src_code &rarr;</a>
+                </div>
+            </div>
+
+            <!-- PigselTV -->
+            <div class="project-card" data-category="software">
+                <div class="card-top">
+                    <span class="project-status">LOG_ID: 04 // STAGING</span>
+                    <h3 class="project-title">PigselTV</h3>
+                    <p class="project-desc">A web-based media portal featuring dynamic video aggregation. Built with back-end logic rendering architectures to integrate live media payloads smoothly via external platform structures.</p>
+                    <div class="tag-group">
+                        <span class="tag">PHP</span>
+                        <span class="tag">Vidking API</span>
+                        <span class="tag">iFrames</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">SQL</span>
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <a href="https://github.com/pixelKaushal/pigseltv" target="_blank" class="action-link repo-btn">src_code &rarr;</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>SYSTEM STATUS: ONLINE // YEAR: 2026</p>
+    </footer>
+
+    <script>
+        function filterProjects(category, buttonElement) {
+            // 1. Reset active visual states on controls
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            buttonElement.classList.add('active');
+
+            // 2. Filter logic evaluation
+            const cards = document.querySelectorAll('.project-card');
+            
+            cards.forEach(card => {
+                const type = card.getAttribute('data-category');
+                
+                if (category === 'all' || type === category) {
+                    card.classList.remove('hidden-item');
+                } else {
+                    card.classList.add('hidden-item');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
