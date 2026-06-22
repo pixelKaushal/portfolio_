@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kaushal Gautam | Portfolio Terminal</title>
+    <!-- Chart.js CDN for the performance graph -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* --- Design Tokens & Global Reset --- */
         :root {
@@ -292,6 +294,64 @@
             text-decoration: underline;
         }
 
+        /* --- Academic Analytics Section Custom Styles --- */
+        .analytics-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        @media (min-width: 850px) {
+            .analytics-container {
+                grid-template-columns: 4fr 3fr;
+            }
+        }
+
+        .chart-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .stats-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .stat-display {
+            background-color: #0e0e13;
+            border-left: 3px solid var(--accent-cyan);
+            padding: 15px 20px;
+        }
+
+        .stat-display.purple {
+            border-left-color: var(--accent-purple);
+        }
+
+        .stat-val {
+            font-family: var(--font-mono);
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-main);
+        }
+
+        .stat-lbl {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .stat-institution {
+            font-size: 0.9rem;
+            color: #a0a0b5;
+        }
+
         /* --- Contact Endpoint Block --- */
         .endpoint-box {
             background-color: var(--card-bg);
@@ -349,7 +409,9 @@
             .console-panel { padding: 30px 20px; }
             .console-title { font-size: 1.8rem; }
         }
+        
     </style>
+    <link rel="icon" href="icon_K.png" type="image/x-icon">
 </head>
 <body>
 
@@ -359,6 +421,7 @@
             <ul class="nav-links">
                 <li><a href="#about" class="active">./about_me</a></li>
                 <li><a href="projects.html">./projects</a></li>
+                <li><a href="blogs.html">./blogs</a></li>
                 <li><a href="#contact">./contact</a></li>
             </ul>
         </nav>
@@ -394,6 +457,34 @@
                     <div class="console-cmd">$ cat profile.md</div>
                     <h2 class="console-title">Kaushal Gautam</h2>
                     <p class="console-text">I am a science student at St. Xavier's College, Kathmandu. Outside of my standard school hours, I focus on scripting local software utilities, playing with web backends, and assembling basic logic architectures for interactive games.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Academic Milestones & Graph Section -->
+        <section id="academics">
+            <div class="section-label">Academic Metrics & Logs</div>
+            
+            <div class="analytics-container">
+                <!-- Chart Area -->
+                <div class="chart-box">
+                    <div class="log-header" style="margin-bottom: 15px;">EXECUTION_LOG: GPA_TREND_ANALYSIS.svg</div>
+                    <canvas id="gpaChart" style="max-height: 260px; width: 100%;"></canvas>
+                </div>
+
+                <!-- Core Accomplishments List -->
+                <div class="stats-panel">
+                    <div class="stat-display">
+                        <div class="stat-lbl">BOARD_FINAL // GRADE 12 (NEB)</div>
+                        <div class="stat-val">3.90 GPA</div>
+                        <div class="stat-institution">St. Xavier's College, Maitighar</div>
+                    </div>
+                    
+                    <div class="stat-display purple">
+                        <div class="stat-lbl">BOARD_FINAL // GRADE 10 (SEE)</div>
+                        <div class="stat-val">3.86 GPA</div>
+                        <div class="stat-institution">Him Rashmi High School, Manamaiju</div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -437,5 +528,64 @@
         <p>SYSTEM STATUS: ONLINE // YEAR: 2026</p>
     </footer>
 
+    <!-- Script rendering the custom themed performance graph -->
+    <script>
+        const ctx = document.getElementById('gpaChart').getContext('2d');
+        
+        const labels = [
+            '10th 1st', '10th Mid', '10th Pre', 'SEE Final', 
+            '11th 1st', '11th 2nd', '11th Mid', '11th Final', 
+            '12th 1st', '12th 2nd', '12th Pre', 'NEB Final'
+        ];
+        
+        const gpaData = [3.66, 3.66, 3.71, 3.86, 3.49, 3.67, 3.65, 3.75, 3.60, 3.80, 3.64, 3.90];
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Term GPA Progress',
+                    data: gpaData,
+                    borderColor: '#00f0ff',
+                    backgroundColor: 'rgba(0, 240, 255, 0.05)',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#9d4edd',
+                    pointBorderColor: '#0a0a0d',
+                    pointHoverBackgroundColor: '#00f0ff',
+                    pointRadius: 4,
+                    tension: 0.25,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        min: 3.30,
+                        max: 4.00,
+                        grid: { color: '#1c1c28' },
+                        ticks: {
+                            color: '#6e6e80',
+                            font: { family: 'Courier New' }
+                        }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: {
+                            color: '#6e6e80',
+                            font: { family: 'Courier New', size: 10 },
+                            maxRotation: 45,
+                            minRotation: 45
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
